@@ -50,6 +50,8 @@ modules:
       - pnpm --version
       - sed -i "s#postinstall\":\ \"\(.*\)\"#postinstall\":\ \"\"#g" package.json # remove playwright install step that downloads at runtime files from internet
       - mkdir pnpm-store && mv v11 pnpm-store/
+      # pnpm 12 requires the registry metadata cache for offline installs
+      - mkdir -p $XDG_CACHE_HOME && mv pnpm-metadata/pnpm $XDG_CACHE_HOME/
       - echo home is $HOME
       - pnpm install --loglevel debug --offline --frozen-lockfile --config.trustLockfile=true --store-dir ./pnpm-store
       # Replace segment key
